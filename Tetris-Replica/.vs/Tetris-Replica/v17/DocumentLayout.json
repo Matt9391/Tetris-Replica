@@ -1,10 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "F:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\",
+  "WorkspaceRootPath": "E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}|Tetris-Replica.vcxproj|F:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}|Tetris-Replica.vcxproj|E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}|Tetris-Replica.vcxproj|solutionrelative:game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}|Tetris-Replica.vcxproj|E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\template.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}|Tetris-Replica.vcxproj|solutionrelative:template.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}|Tetris-Replica.vcxproj|E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\template.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}|Tetris-Replica.vcxproj|solutionrelative:template.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}|Tetris-Replica.vcxproj|E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\surface.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}|Tetris-Replica.vcxproj|solutionrelative:surface.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}|Tetris-Replica.vcxproj|E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\surface.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}|Tetris-Replica.vcxproj|solutionrelative:surface.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}|Tetris-Replica.vcxproj|E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D8FE2186-4BF0-4B89-913F-6C26818E5AC5}|Tetris-Replica.vcxproj|solutionrelative:game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,11 +34,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 8,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "template.h",
+              "DocumentMoniker": "E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\template.h",
+              "RelativeDocumentMoniker": "template.h",
+              "ToolTip": "E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\template.h",
+              "RelativeToolTip": "template.h",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-22T18:54:20.019Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -34,13 +63,65 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "template.cpp",
+              "DocumentMoniker": "E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\template.cpp",
+              "RelativeDocumentMoniker": "template.cpp",
+              "ToolTip": "E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\template.cpp",
+              "RelativeToolTip": "template.cpp",
+              "ViewState": "AgIAAFMBAAAAAAAAAAAAAFgBAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-22T18:52:24.752Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "surface.cpp",
+              "DocumentMoniker": "E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\surface.cpp",
+              "RelativeDocumentMoniker": "surface.cpp",
+              "ToolTip": "E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\surface.cpp",
+              "RelativeToolTip": "surface.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJYAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-22T18:51:17.053Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "surface.h",
+              "DocumentMoniker": "E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\surface.h",
+              "RelativeDocumentMoniker": "surface.h",
+              "ToolTip": "E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\surface.h",
+              "RelativeToolTip": "surface.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHMAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-22T18:50:57.183Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "game.h",
+              "DocumentMoniker": "E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\game.h",
+              "RelativeDocumentMoniker": "game.h",
+              "ToolTip": "E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\game.h",
+              "RelativeToolTip": "game.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-10-22T18:50:35.864Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "game.cpp",
-              "DocumentMoniker": "F:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\game.cpp",
+              "DocumentMoniker": "E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\game.cpp",
               "RelativeDocumentMoniker": "game.cpp",
-              "ToolTip": "F:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\game.cpp",
+              "ToolTip": "E:\\Informatica\\GitHubRepos\\Tetris-Replica\\Tetris-Replica\\game.cpp",
               "RelativeToolTip": "game.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAD8AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-10-21T19:52:18.295Z",
               "EditorCaption": ""
