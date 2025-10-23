@@ -1,3 +1,4 @@
+#include "Tetromino.h"
 #pragma once
 
 namespace Tmpl8 {
@@ -15,6 +16,9 @@ public:
 	void MouseMove( int x, int y ) { /* implement if you want to detect mouse movement */ }
 	void KeyUp( int key ) { /* implement if you want to handle keys */ }
 	void KeyDown( int key ) { /* implement if you want to handle keys */ }
+
+
+	Tetromino tetromino;
 private:
 	Surface* screen;
 };

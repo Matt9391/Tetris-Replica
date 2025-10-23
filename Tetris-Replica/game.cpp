@@ -2,7 +2,6 @@
 #include "surface.h"
 #include <cstdio> //printf
 #include <windows.h>
-#include <array>
 
 #define COLUMNS 10
 #define ROWS 20
@@ -10,19 +9,23 @@
 
 namespace Tmpl8
 {
-	using Grid = std::array<std::array<int, COLUMNS>, ROWS>;
-	using Shape = std::array<std::array<int, SSIZE>, SSIZE>;
 	void printGrid(Grid& grid);
-	void copyShapeToGrid(int x, int y, Shape& shape, Grid* grid);
+	void copyShapeToGrid(Vector2i pos, Shape& shape, Grid* grid);
 	Shape rotateShape(Shape& shape);
 	void clearGrid(Grid* grid);
 
 	Grid grid = { 0 };
+	Grid gridStatic = { 0 };
 	std::array<Shape, 5> standardShapes;
+
+	bool gridToUpdate = false;
 
 	// -----------------------------------------------------------
 	// Initialize the application
 	// -----------------------------------------------------------
+
+
+
 	void Game::Init()
 	{
 		printGrid(grid);
@@ -57,17 +60,23 @@ namespace Tmpl8
 								{0,0,0,0}
 							} };
 
-		Shape newShape = standardShapes[4];
-		copyShapeToGrid(0, 0, newShape, &grid);
-		printGrid(grid);
+		//Shape newShape = standardShapes[4];
+		//copyShapeToGrid(0, 0, newShape, &grid);
+		//printGrid(grid);
 
-		clearGrid(&grid);
+		//clearGrid(&grid);
 
-		newShape = rotateShape(newShape);
-		copyShapeToGrid(0, 0, newShape, &grid);
+		//newShape = rotateShape(newShape);
+		//copyShapeToGrid(0, 0, newShape, &grid);
 
-		printGrid(grid);
+		//printGrid(grid);
 
+		tetromino = Tetromino(standardShapes[1]);
+
+		//printf("%d %d\n", tetromino.getPos().x, tetromino.getPos().y);
+		//copyShapeToGrid(tetromino.getPos(), tetromino.getShape(), &grid);
+
+		//printGrid(grid);
 	}
 	
 	// -----------------------------------------------------------
@@ -80,6 +89,18 @@ namespace Tmpl8
 	// -----------------------------------------------------------
 	void Game::Tick(float deltaTime)
 	{
+		if (gridToUpdate) {
+			clearGrid(&grid);
+			copyShapeToGrid(tetromino.getPos(), tetromino.getShape(), &grid);
+			gridToUpdate = false;
+			printGrid(grid);
+		}
+
+		bool tUpdated = tetromino.update(deltaTime, gridStatic);
+		
+		if(tUpdated)
+			gridToUpdate = true;
+
 	}
 
 	void Game::Shutdown()
@@ -94,18 +115,20 @@ namespace Tmpl8
 		return rotatedShape;
 	}
 
-	void copyShapeToGrid(int x, int y, Shape& shape, Grid* grid) {
-		for (int i = y; i < SSIZE; i++) {
-			for (int j = x; j < SSIZE; j++) {
-				if (shape[i][j] != 0) {
-					(*grid)[i][j] = shape[i][j];
+	void copyShapeToGrid(Vector2i pos, Shape& shape, Grid* grid) {
+		for (int i = pos.y, iShape = 0; i < pos.y + SSIZE; i++, iShape++) {
+			for (int j = pos.x, jShape = 0; j < pos.x + SSIZE; j++, jShape++) {
+				if (i < 0 || i >= ROWS || j < 0 || j >= COLUMNS)
+					continue;
+				if (shape[iShape][jShape] != 0) {
+					(*grid)[i][j] = shape[iShape][jShape];
 				}
 			}
 		}
 	}
 
 	void clearGrid(Grid* grid) {
-		(*grid) = { 0 };
+		(*grid) = gridStatic;
 	}
 
 	void printGrid(Grid& grid) {
