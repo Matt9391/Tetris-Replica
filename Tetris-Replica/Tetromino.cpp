@@ -11,7 +11,7 @@ namespace Tmpl8 {
 		npos(pos)
 	{}
 
-	bool Tetromino::update(float dt, Grid& grid) {
+	bool Tetromino::update(float dt, Grid& grid, bool* collided) {
 		elapsedTime += dt;
 		if (elapsedTime < timer)
 			return false;
@@ -24,6 +24,10 @@ namespace Tmpl8 {
 			this->pos = this->npos;
 			printf("Y: %d\n", this->pos.y);
 		}
+		else {
+			(*collided) = true;
+		}
+		
 
 		elapsedTime = 0;
 		return true;
@@ -60,6 +64,13 @@ namespace Tmpl8 {
 
 	Shape Tetromino::getShape() {
 		return this->shape;
+	}
+
+	void Tetromino::setPos(Vector2i newPos) {
+		this->pos = newPos;
+	}
+	void Tetromino::setShape(Shape& newShape) {
+		this->shape = newShape;
 	}
 
 	

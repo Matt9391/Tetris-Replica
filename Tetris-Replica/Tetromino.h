@@ -9,10 +9,13 @@ namespace Tmpl8 {
 		Tetromino() = default;
 		Tetromino(Shape& shape);
 
-		bool update(float dt, Grid& grid);
+		bool update(float dt, Grid& grid, bool* collided);
 
 		Vector2i getPos();
 		Shape getShape();
+		
+		void setPos(Vector2i newPos);
+		void setShape(Shape& shape);
 		
 	private:
 		bool collideWithStaticGrid(Grid& gridStatic);

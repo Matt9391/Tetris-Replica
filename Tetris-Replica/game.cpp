@@ -16,9 +16,32 @@ namespace Tmpl8
 
 	Grid grid = { 0 };
 	Grid gridStatic = { 0 };
+//	Grid gridStatic = { {
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,0,0,0,0,0,0 },
+//	{ 0,0,0,0,1,0,0,0,0,0 },
+//	{ 1,1,1,1,1,1,1,1,1,1 }
+//} };
 	std::array<Shape, 5> standardShapes;
 
 	bool gridToUpdate = false;
+	bool tCollided = false;
 
 	// -----------------------------------------------------------
 	// Initialize the application
@@ -71,7 +94,7 @@ namespace Tmpl8
 
 		//printGrid(grid);
 
-		tetromino = Tetromino(standardShapes[1]);
+		tetromino = Tetromino(standardShapes[4]);
 
 		//printf("%d %d\n", tetromino.getPos().x, tetromino.getPos().y);
 		//copyShapeToGrid(tetromino.getPos(), tetromino.getShape(), &grid);
@@ -96,10 +119,19 @@ namespace Tmpl8
 			printGrid(grid);
 		}
 
-		bool tUpdated = tetromino.update(deltaTime, gridStatic);
+		bool tUpdated = tetromino.update(deltaTime, gridStatic, &tCollided);
 		
+		if (tCollided) {
+			tCollided = false;
+			gridStatic = grid;
+			tetromino.setPos({ rand() % COLUMNS,0});
+			tetromino.setShape(standardShapes[rand() % 5]);
+		}
+
 		if(tUpdated)
 			gridToUpdate = true;
+		else 
+			tetromino.setPos({ rand() % COLUMNS,tetromino.getPos().y});
 
 	}
 
