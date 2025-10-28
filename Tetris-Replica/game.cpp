@@ -11,7 +11,6 @@ namespace Tmpl8
 {
 	void printGrid(Grid& grid);
 	void copyShapeToGrid(Vector2i pos, Shape& shape, Grid* grid);
-	Shape rotateShape(Shape& shape);
 	void clearGrid(Grid* grid);
 
 	Grid grid = { 0 };
@@ -124,14 +123,12 @@ namespace Tmpl8
 		if (tCollided) {
 			tCollided = false;
 			gridStatic = grid;
-			tetromino.setPos({ rand() % COLUMNS,0});
+			tetromino.setPos({ 3,0 });
 			tetromino.setShape(standardShapes[rand() % 5]);
 		}
 
 		if(tUpdated)
 			gridToUpdate = true;
-		else 
-			tetromino.setPos({ rand() % COLUMNS,tetromino.getPos().y});
 
 	}
 
@@ -139,13 +136,7 @@ namespace Tmpl8
 	{
 	}
 
-	Shape rotateShape(Shape& shape) {
-		Shape rotatedShape = { 0 };
-		for (int i = 0; i < SSIZE ; i++)
-			for (int j = 0; j < SSIZE; j++)
-				rotatedShape[i][j] = shape[SSIZE - j - 1][i];
-		return rotatedShape;
-	}
+	
 
 	void copyShapeToGrid(Vector2i pos, Shape& shape, Grid* grid) {
 		for (int i = pos.y, iShape = 0; i < pos.y + SSIZE; i++, iShape++) {

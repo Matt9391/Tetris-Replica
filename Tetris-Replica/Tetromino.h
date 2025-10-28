@@ -19,10 +19,13 @@ namespace Tmpl8 {
 		
 	private:
 		bool collideWithStaticGrid(Grid& gridStatic);
+		bool move();
 
 		Vector2i pos;
 		Vector2i npos;
 		Shape shape;
+
+		char lastKey;
 
 		float timer;
 		float elapsedTime;

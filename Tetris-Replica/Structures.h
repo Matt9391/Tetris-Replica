@@ -8,8 +8,12 @@ namespace Tmpl8 {
 
 	using Grid = std::array<std::array<int, COLUMNS>, ROWS>;
 	using Shape = std::array<std::array<int, SSIZE>, SSIZE>;
+	
+	Shape rotateShape(Shape& shape);
 
 	struct Vector2i {
 		int x, y;
 	};
+
+
 };

@@ -1,17 +1,26 @@
 #include "Tetromino.h"
-
+#include <Windows.h>
 namespace Tmpl8 {
-
+	Shape rotateShape(Shape& shape) {
+		Shape rotatedShape = { 0 };
+		for (int i = 0; i < SSIZE; i++)
+			for (int j = 0; j < SSIZE; j++)
+				rotatedShape[i][j] = shape[SSIZE - j - 1][i];
+		return rotatedShape;
+	}
 
 	Tetromino::Tetromino(Shape& shape) :
 		shape(shape),
 		pos({ 3,0 }),
-		timer(200),
+		timer(2000),
 		elapsedTime(0),
-		npos(pos)
+		npos(pos),
+		lastKey(' ')
 	{}
 
 	bool Tetromino::update(float dt, Grid& grid, bool* collided) {
+		if (this->move())
+			return true;
 		elapsedTime += dt;
 		if (elapsedTime < timer)
 			return false;
@@ -33,6 +42,42 @@ namespace Tmpl8 {
 		return true;
 	
 
+	}
+
+	bool Tetromino::move() {
+		char input = ' ';
+		if (GetAsyncKeyState('A') & 0x8000) input = 'a';
+		if (GetAsyncKeyState('D') & 0x8000) input = 'd';
+		if (GetAsyncKeyState('R') & 0x8000) input = 'r';
+		if (lastKey == input)
+			return false;
+
+		lastKey = input;
+		if (input == 'a') {
+			this->npos = this->pos;
+			this->npos.x--;
+		}
+		else if (input == 'd') {
+			this->npos = this->pos;
+			this->npos.x++;
+		}
+		else if (input == 'r') {
+			this->shape = rotateShape(this->shape);
+			return true;
+		}
+
+		for (int i = this->npos.y, iShape = 0; i < this->npos.y + SSIZE; i++, iShape++) {
+			for (int j = this->npos.x, jShape = 0; j < this->npos.x + SSIZE; j++, jShape++) {
+				if (this->shape[iShape][jShape] == 0)
+					continue;
+				if (j < 0 || j >= COLUMNS - 1)
+					return false;
+				this->pos = this->npos;
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	bool Tetromino::collideWithStaticGrid(Grid& gridStatic) {
