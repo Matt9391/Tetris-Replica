@@ -12,6 +12,7 @@ namespace Tmpl8
 	void printGrid(Grid& grid);
 	void copyShapeToGrid(Vector2i pos, Shape& shape, Grid* grid);
 	void clearGrid(Grid* grid);
+	bool deleteFullLines(Grid* gridStatic);
 
 	Grid grid = { 0 };
 	Grid gridStatic = { 0 };
@@ -93,7 +94,7 @@ namespace Tmpl8
 
 		//printGrid(grid);
 
-		tetromino = Tetromino(standardShapes[4]);
+		tetromino = Tetromino(standardShapes[2]);
 
 		//printf("%d %d\n", tetromino.getPos().x, tetromino.getPos().y);
 		//copyShapeToGrid(tetromino.getPos(), tetromino.getShape(), &grid);
@@ -127,7 +128,9 @@ namespace Tmpl8
 			tetromino.setShape(standardShapes[rand() % 5]);
 		}
 
-		if(tUpdated)
+		bool linesDeleted = deleteFullLines(&gridStatic);
+
+		if(tUpdated || linesDeleted)
 			gridToUpdate = true;
 
 	}
@@ -136,6 +139,28 @@ namespace Tmpl8
 	{
 	}
 
+	bool deleteFullLines(Grid* gridStatic) {
+		bool linesDeleted = false;
+		for (int i = 0; i < ROWS; i++) {
+			bool full = true;
+			for (int j = 0; j < COLUMNS; j++) {
+				if ((*gridStatic)[i][j] == 0) {
+					full = false;
+					break;
+				}
+			}
+			if (full) {
+				linesDeleted = true;
+				for (int ii = i; ii > 0; ii--) {
+					for (int j = 0; j < COLUMNS; j++) {
+						(*gridStatic)[ii][j] = (*gridStatic)[ii - 1][j];
+					}
+					(*gridStatic)[0] = { 0 };
+				}
+			}
+		}
+		return linesDeleted;
+	}
 	
 
 	void copyShapeToGrid(Vector2i pos, Shape& shape, Grid* grid) {

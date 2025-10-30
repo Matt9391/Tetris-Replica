@@ -12,7 +12,7 @@ namespace Tmpl8 {
 	Tetromino::Tetromino(Shape& shape) :
 		shape(shape),
 		pos({ 3,0 }),
-		timer(2000),
+		timer(400),
 		elapsedTime(0),
 		npos(pos),
 		lastKey(' ')
@@ -66,15 +66,23 @@ namespace Tmpl8 {
 			return true;
 		}
 
+		bool canMove = true;
+
 		for (int i = this->npos.y, iShape = 0; i < this->npos.y + SSIZE; i++, iShape++) {
 			for (int j = this->npos.x, jShape = 0; j < this->npos.x + SSIZE; j++, jShape++) {
 				if (this->shape[iShape][jShape] == 0)
 					continue;
-				if (j < 0 || j >= COLUMNS - 1)
-					return false;
-				this->pos = this->npos;
-				return true;
+
+				if (j < 0 || j > COLUMNS - 1) {
+					canMove = false;
+					break; // esci solo dal ciclo interno
+				}
 			}
+		}
+
+		if (canMove) {
+			this->pos = this->npos;
+			return true;
 		}
 
 		return false;
