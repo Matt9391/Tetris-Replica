@@ -28,7 +28,11 @@ namespace Tmpl8 {
 		char lastKey;
 
 		float timer;
+		float defaultTimer;
+		float fastTimer;
 		float elapsedTime;
+
+		int color;
 	};
 
 }

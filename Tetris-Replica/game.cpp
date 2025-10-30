@@ -47,8 +47,6 @@ namespace Tmpl8
 	// Initialize the application
 	// -----------------------------------------------------------
 
-
-
 	void Game::Init()
 	{
 		printGrid(grid);
@@ -83,23 +81,8 @@ namespace Tmpl8
 								{0,0,0,0}
 							} };
 
-		//Shape newShape = standardShapes[4];
-		//copyShapeToGrid(0, 0, newShape, &grid);
-		//printGrid(grid);
-
-		//clearGrid(&grid);
-
-		//newShape = rotateShape(newShape);
-		//copyShapeToGrid(0, 0, newShape, &grid);
-
-		//printGrid(grid);
-
 		tetromino = Tetromino(standardShapes[2]);
 
-		//printf("%d %d\n", tetromino.getPos().x, tetromino.getPos().y);
-		//copyShapeToGrid(tetromino.getPos(), tetromino.getShape(), &grid);
-
-		//printGrid(grid);
 	}
 	
 	// -----------------------------------------------------------
@@ -124,8 +107,7 @@ namespace Tmpl8
 		if (tCollided) {
 			tCollided = false;
 			gridStatic = grid;
-			tetromino.setPos({ 3,0 });
-			tetromino.setShape(standardShapes[rand() % 5]);
+			tetromino = Tetromino(standardShapes[getRandomInt(0, 4)]);
 		}
 
 		bool linesDeleted = deleteFullLines(&gridStatic);

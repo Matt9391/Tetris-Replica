@@ -1,4 +1,5 @@
 #include <array>
+#include <random>
 
 #define COLUMNS 10
 #define ROWS 20
@@ -15,5 +16,6 @@ namespace Tmpl8 {
 		int x, y;
 	};
 
+	int getRandomInt(int min, int max);
 
 };
