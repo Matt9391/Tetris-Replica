@@ -7,7 +7,7 @@ namespace Tmpl8 {
 	{
 	public:
 		Tetromino() = default;
-		Tetromino(Shape& shape);
+		Tetromino(const Shape& shape);
 
 		bool update(float dt, Grid& grid, bool* collided);
 
@@ -19,11 +19,12 @@ namespace Tmpl8 {
 		
 	private:
 		bool collideWithStaticGrid(Grid& gridStatic);
-		bool move();
+		bool move(Grid& gridStatic);
 
 		Vector2i pos;
 		Vector2i npos;
 		Shape shape;
+		Shape nextShape;
 
 		char lastKey;
 

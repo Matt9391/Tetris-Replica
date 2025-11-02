@@ -2,6 +2,7 @@
 #include "surface.h"
 #include <cstdio> //printf
 #include <windows.h>
+#include <array>
 
 #define COLUMNS 10
 #define ROWS 20
@@ -13,9 +14,13 @@ namespace Tmpl8
 	void copyShapeToGrid(Vector2i pos, Shape& shape, Grid* grid);
 	void clearGrid(Grid* grid);
 	bool deleteFullLines(Grid* gridStatic);
+	void drawGrid(Surface* screen, Grid& grid, Grid& tetrominoGrid);
 
 	Grid grid = { 0 };
 	Grid gridStatic = { 0 };
+
+	Sprite tilesFrames(new Surface("assets/tetris-Sheet.tga"), 9);
+
 //	Grid gridStatic = { {
 //	{ 0,0,0,0,0,0,0,0,0,0 },
 //	{ 0,0,0,0,0,0,0,0,0,0 },
@@ -40,7 +45,7 @@ namespace Tmpl8
 //} };
 	std::array<Shape, 5> standardShapes;
 
-	bool gridToUpdate = false;
+	bool gridToUpdate = true;
 	bool tCollided = false;
 
 	// -----------------------------------------------------------
@@ -81,7 +86,8 @@ namespace Tmpl8
 								{0,0,0,0}
 							} };
 
-		tetromino = Tetromino(standardShapes[2]);
+
+		tetromino = Tetromino(standardShapes[getRandomInt(0, 4)]);
 
 	}
 	
@@ -108,6 +114,7 @@ namespace Tmpl8
 			tCollided = false;
 			gridStatic = grid;
 			tetromino = Tetromino(standardShapes[getRandomInt(0, 4)]);
+			grid = { 0 };
 		}
 
 		bool linesDeleted = deleteFullLines(&gridStatic);
@@ -115,10 +122,37 @@ namespace Tmpl8
 		if(tUpdated || linesDeleted)
 			gridToUpdate = true;
 
+		screen->Clear(0);
+		drawGrid(screen,gridStatic, grid);
+		//tilesFrames.SetFrame(8);
+		//tilesFrames.Draw(screen, 10, 10);
+
 	}
 
 	void Game::Shutdown()
 	{
+	}
+
+	void drawGrid(Surface* screen, Grid& staticGrid, Grid& tetrominoGrid) {
+		int tileSize = 32;
+		
+		//for (int i = 0; i < ROWS; i++) {
+		//	for (int j = 0; j < COLUMNS; j++) {
+		//		int value = staticGrid[i][j];
+		//		tilesFrames.SetFrame(value);
+		//		tilesFrames.Draw(screen, tileSize * j, tileSize * i);
+		//	}
+		//}
+
+		for (int i = 0; i < ROWS; i++) {
+			for (int j = 0; j < COLUMNS; j++) {
+				int value = tetrominoGrid[i][j];
+				tilesFrames.SetFrame(value);
+				tilesFrames.Draw(screen, tileSize * j, tileSize * i);
+				
+			}
+		}
+
 	}
 
 	bool deleteFullLines(Grid* gridStatic) {

@@ -18,8 +18,9 @@ namespace Tmpl8 {
 		return dis(gen);
 	}
 
-	Tetromino::Tetromino(Shape& shape) :
+	Tetromino::Tetromino(const Shape& shape) :
 		shape(shape),
+		nextShape(shape),
 		pos({ 3,0 }),
 		timer(2000),
 		defaultTimer(2000),
@@ -27,7 +28,7 @@ namespace Tmpl8 {
 		elapsedTime(0),
 		npos(pos),
 		lastKey(' '),
-		color(getRandomInt(1, 9))
+		color(getRandomInt(1, 8))
 	{
 		//randomize color
 		for (int i = 0; i < SSIZE; i++) {
@@ -40,6 +41,7 @@ namespace Tmpl8 {
 	}
 
 	bool Tetromino::update(float dt, Grid& grid, bool* collided) {
+		bool xMove = false, yMove = false;
 		if (GetAsyncKeyState('Q') & 0x8000) {
 			this->timer = this->fastTimer;
 		}
@@ -47,32 +49,34 @@ namespace Tmpl8 {
 			this->timer = this->defaultTimer;
 		}
 
-		if (this->move())
-			return true;
-		elapsedTime += dt;
-		if (elapsedTime < timer)
-			return false;
-			
-		
-		this->npos = pos;
-		this->npos.y++;
+		xMove = this->move(grid);
 
-		if(!collideWithStaticGrid(grid)){
-			this->pos = this->npos;
-			printf("Y: %d\n", this->pos.y);
+		elapsedTime += dt;
+		if (elapsedTime < timer) {
+			yMove = false;
 		}
 		else {
-			(*collided) = true;
-		}
+			this->npos = pos;
+			this->npos.y++;
+
+			if(!collideWithStaticGrid(grid)){
+				this->pos = this->npos;
+				printf("Y: %d\n", this->pos.y);
+			}
+			else {
+				(*collided) = true;
+			}
 		
 
-		elapsedTime = 0;
-		return true;
-	
+			elapsedTime = 0;
+			yMove = true;
+		}
+		
+		return xMove || yMove;
 
 	}
 
-	bool Tetromino::move() {
+	bool Tetromino::move(Grid& gridStatic) {
 		char input = ' ';
 		if (GetAsyncKeyState('A') & 0x8000) input = 'a';
 		if (GetAsyncKeyState('D') & 0x8000) input = 'd';
@@ -82,7 +86,7 @@ namespace Tmpl8 {
 
 		lastKey = input;
 		bool shapeRotated = false;
-		Shape nextShape = this->shape;
+		this->nextShape = this->shape;
 
 		if (input == 'a') {
 			this->npos = this->pos;
@@ -93,15 +97,23 @@ namespace Tmpl8 {
 			this->npos.x++;
 		}
 		else if (input == 'r') {
-			nextShape = rotateShape(nextShape);
+			this->nextShape = rotateShape(nextShape);
 			shapeRotated = true;
+		}
+
+		if (collideWithStaticGrid(gridStatic)) {
+
+			if (shapeRotated) {
+				this->nextShape = this->shape;
+			}
+			return false;
 		}
 
 		bool canMove = true;
 
 		for (int i = this->npos.y, iShape = 0; i < this->npos.y + SSIZE; i++, iShape++) {
 			for (int j = this->npos.x, jShape = 0; j < this->npos.x + SSIZE; j++, jShape++) {
-				if (nextShape[iShape][jShape] == 0)
+				if (this->nextShape[iShape][jShape] == 0)
 					continue;
 
 				if (j < 0 || j > COLUMNS - 1) {
@@ -123,12 +135,10 @@ namespace Tmpl8 {
 	}
 
 	bool Tetromino::collideWithStaticGrid(Grid& gridStatic) {
-		if (this->npos.y >= ROWS)
-			return true;
 
 		for (int i = this->npos.y, iShape = 0; i < this->npos.y + SSIZE; i++, iShape++) {
 			for (int j = this->npos.x, jShape = 0; j < this->npos.x + SSIZE; j++, jShape++) {
-				if (shape[iShape][jShape] == 0)
+				if (this->nextShape[iShape][jShape] == 0)
 					continue;
 				if (i < 0 || j < 0 || j >= COLUMNS)
 					continue;
