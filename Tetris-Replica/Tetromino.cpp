@@ -1,6 +1,8 @@
 #include "Tetromino.h"
 #include <Windows.h>
 namespace Tmpl8 {
+
+	//function that rotate any shape by 90 degrees clockwise
 	Shape rotateShape(Shape& shape) {
 		Shape rotatedShape = { 0 };
 		for (int i = 0; i < SSIZE; i++)
@@ -9,10 +11,11 @@ namespace Tmpl8 {
 		return rotatedShape;
 	}
 
+	//random number generator
 	int getRandomInt(int min, int max)
 	{
-		static std::random_device rd;  // seme casuale
-		static std::mt19937 gen(rd()); // generatore Mersenne Twister
+		static std::random_device rd;  
+		static std::mt19937 gen(rd());
 
 		std::uniform_int_distribution<> dis(min, max); // range [min,max]
 		return dis(gen);
@@ -22,9 +25,9 @@ namespace Tmpl8 {
 		shape(shape),
 		nextShape(shape),
 		pos({ 3,0 }),
-		timer(2000),
-		defaultTimer(2000),
-		fastTimer(200),
+		timer(500),
+		defaultTimer(500),
+		fastTimer(80),
 		elapsedTime(0),
 		npos(pos),
 		lastKey(' '),
@@ -41,8 +44,9 @@ namespace Tmpl8 {
 	}
 
 	bool Tetromino::update(float dt, Grid& grid, bool* collided) {
+		//variables used to give a feedback if the piece moved
 		bool xMove = false, yMove = false;
-		if (GetAsyncKeyState('Q') & 0x8000) {
+		if (GetAsyncKeyState('Q') & 0x8000) { //hold 'Q' to fall faster
 			this->timer = this->fastTimer;
 		}
 		else {
@@ -56,14 +60,16 @@ namespace Tmpl8 {
 			yMove = false;
 		}
 		else {
+			//calculate next position
 			this->npos = pos;
 			this->npos.y++;
 
+			//if next position is valid (return false) the piece moves
 			if(!collideWithStaticGrid(grid)){
 				this->pos = this->npos;
-				printf("Y: %d\n", this->pos.y);
 			}
 			else {
+				//feedback variable to update the static grid
 				(*collided) = true;
 			}
 		
@@ -77,11 +83,12 @@ namespace Tmpl8 {
 	}
 
 	bool Tetromino::move(Grid& gridStatic) {
+		//read user input
 		char input = ' ';
 		if (GetAsyncKeyState('A') & 0x8000) input = 'a';
 		if (GetAsyncKeyState('D') & 0x8000) input = 'd';
 		if (GetAsyncKeyState('R') & 0x8000) input = 'r'; 
-		if (lastKey == input)
+		if (lastKey == input) //prevent holding key
 			return false;
 
 		lastKey = input;
@@ -102,7 +109,6 @@ namespace Tmpl8 {
 		}
 
 		if (collideWithStaticGrid(gridStatic)) {
-
 			if (shapeRotated) {
 				this->nextShape = this->shape;
 			}
@@ -111,6 +117,7 @@ namespace Tmpl8 {
 
 		bool canMove = true;
 
+		//logic to keep the piece in bounds 
 		for (int i = this->npos.y, iShape = 0; i < this->npos.y + SSIZE; i++, iShape++) {
 			for (int j = this->npos.x, jShape = 0; j < this->npos.x + SSIZE; j++, jShape++) {
 				if (this->nextShape[iShape][jShape] == 0)
@@ -136,16 +143,17 @@ namespace Tmpl8 {
 
 	bool Tetromino::collideWithStaticGrid(Grid& gridStatic) {
 
+		//logic that check if the piece collides with the grid/other pieces
 		for (int i = this->npos.y, iShape = 0; i < this->npos.y + SSIZE; i++, iShape++) {
 			for (int j = this->npos.x, jShape = 0; j < this->npos.x + SSIZE; j++, jShape++) {
-				if (this->nextShape[iShape][jShape] == 0)
+				if (this->nextShape[iShape][jShape] == 0) //ignore 0 values
 					continue;
-				if (i < 0 || j < 0 || j >= COLUMNS)
+				if (i < 0 || j < 0 || j >= COLUMNS) //if it's not 0 then check if it is bound
 					continue;
 				if(i >= ROWS)
 					return true;
 
-				if (gridStatic[i][j] != 0) {
+				if (gridStatic[i][j] != 0) { //check if it collide with the grid
 					return true;
 				}
 

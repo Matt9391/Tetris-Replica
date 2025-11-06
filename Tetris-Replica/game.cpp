@@ -10,10 +10,22 @@
 
 namespace Tmpl8
 {
+	//------------------------------------------------------
+	//-------------------GAME CONTROLS----------------------
+	// A - D -> Move sideways
+	// Hold Q -> Move down faster
+	// R -> Rotate the tetromino
+	//------------------------------------------------------
+
+	//method that print the grind in the console
 	void printGrid(Grid& grid);
+	//method that copy any given shape to the grid
 	void copyShapeToGrid(Vector2i pos, Shape& shape, Grid* grid);
+	//method that clears the grid
 	void clearGrid(Grid* grid);
+	//function that delete a line if it's full
 	bool deleteFullLines(Grid* gridStatic);
+	//method that print the grid on the screen
 	void drawGrid(Surface* screen, Grid& grid, Grid& tetrominoGrid);
 
 	Grid grid = { 0 };
@@ -21,32 +33,11 @@ namespace Tmpl8
 
 	Sprite tilesFrames(new Surface("assets/tetris-Sheet.tga"), 9);
 
-//	Grid gridStatic = { {
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,0,0,0,0,0,0 },
-//	{ 0,0,0,0,1,0,0,0,0,0 },
-//	{ 1,1,1,1,1,1,1,1,1,1 }
-//} };
 	std::array<Shape, 5> standardShapes;
 
 	bool gridToUpdate = true;
-	bool tCollided = false;
+	bool tCollided = false; //has the tetromino collided
+	int score = 0;
 
 	// -----------------------------------------------------------
 	// Initialize the application
@@ -118,14 +109,17 @@ namespace Tmpl8
 		}
 
 		bool linesDeleted = deleteFullLines(&gridStatic);
+		if (linesDeleted)
+			score++;
 
 		if(tUpdated || linesDeleted)
 			gridToUpdate = true;
 
 		screen->Clear(0);
 		drawGrid(screen,gridStatic, grid);
-		//tilesFrames.SetFrame(8);
-		//tilesFrames.Draw(screen, 10, 10);
+		char textScore[32]; // buffer sicuro
+		snprintf(textScore, sizeof(textScore), "%d", score);
+		screen->Print(textScore, 32 * COLUMNS / 2, 32, 0xffffff);
 
 	}
 
@@ -135,21 +129,12 @@ namespace Tmpl8
 
 	void drawGrid(Surface* screen, Grid& staticGrid, Grid& tetrominoGrid) {
 		int tileSize = 32;
-		
-		//for (int i = 0; i < ROWS; i++) {
-		//	for (int j = 0; j < COLUMNS; j++) {
-		//		int value = staticGrid[i][j];
-		//		tilesFrames.SetFrame(value);
-		//		tilesFrames.Draw(screen, tileSize * j, tileSize * i);
-		//	}
-		//}
 
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLUMNS; j++) {
 				int value = tetrominoGrid[i][j];
 				tilesFrames.SetFrame(value);
 				tilesFrames.Draw(screen, tileSize * j, tileSize * i);
-				
 			}
 		}
 
@@ -159,12 +144,15 @@ namespace Tmpl8
 		bool linesDeleted = false;
 		for (int i = 0; i < ROWS; i++) {
 			bool full = true;
+			//checks if all the line is filled with values != from 0
 			for (int j = 0; j < COLUMNS; j++) {
 				if ((*gridStatic)[i][j] == 0) {
 					full = false;
 					break;
 				}
 			}
+			//if it's full then it copies each line above 1 row below
+			//and set the first to 0
 			if (full) {
 				linesDeleted = true;
 				for (int ii = i; ii > 0; ii--) {
